@@ -53,7 +53,7 @@ ul {
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 1em;
     margin-top: 80px;
 }
 
@@ -69,7 +69,8 @@ ul {
     margin: 0 auto;
     width: 80%;
     height: inherit;
-    background-color: #fff
+    background-color: #fff;
+    height: 40px;
 }
 
 .searchbar {
@@ -110,7 +111,6 @@ ul {
     position: relative;
     overflow: hidden;
     padding-top: 140%;
-    cursor: pointer
 }
 
 .movie-item img {
@@ -118,7 +118,8 @@ ul {
     top: 0;
     left: 0;
     width: 100%;
-    transition: transform .3s linear
+    transition: transform .3s linear,
+    cursor: pointer
 }
 
 .movie-item-content {
@@ -131,38 +132,64 @@ ul {
 }
 
 .movie-item-title {
-    color: var(--text-color);
     font-size: 1rem;
     position: relative;
     font-weight: 700;
     color: yellow;
     text-decoration: underline;
+    font-family: "Comic Sans", "Comic Sans MS", "Chalkboard", cursive, sans-serif;
 }
 
 .movie-infos {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
     margin-top: calc(var(--space-top)/ 2)
 }
 
 .movie-info {
     display: flex;
-    align-items: center;
+    align-items: left;
     font-size: .8rem;
-    font-weight: 600
+    font-weight: 600;
+    color: #00C342; 
+    font-family: "Comic Sans", "Comic Sans MS", "Chalkboard", cursive, sans-serif;
 }
 
 .movie-info span {
     margin-left: 5px
 }
 
-.movie-info i {
-    color: var(--main-color)
+.movie-info-col-image{
+    position: relative;
+    width: 25%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%
+}
+.movie-info-col-text{
+    position: relative;
+    width: 75%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%
 }
 
-.movie-info~.movie-info {
-    margin-left: 5px
+.movie-info-row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.movie-info i {
+    color: var(--main-color)
 }
 
 .popular-tours {
@@ -178,13 +205,10 @@ ul {
 }
 
 .card {
-    width: 12rem;
+    width: 10rem;
     position: relative;
     perspective: 150rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin: 0.5rem;
     background: black;
 }
 
@@ -227,34 +251,11 @@ ul {
     display: block
 }
 
-.dropdown-content a:hover {
-    background-color: #ddd
-}
-
-.dropdown:hover .dropdown-content {
-    display: block
-}
-
-.dropdown:hover .dropbtn {
-    background-color: #70190f
-}
-
-
 button {
     background-color: #000;
     border: none
 }
 
-button:focus,
-button:hover {
-    outline: 0
-}
-
-.nav-menu a.btn:hover,
-a.logo:hover,
-a.movie-item:hover {
-    color: unset
-}
 
 @font-face {
     font-family: "Comic Sans", "Comic Sans MS", "Chalkboard", cursive, sans-serif;
