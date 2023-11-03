@@ -1,130 +1,104 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>awesome-moviate</title>
+    <link rel="shortcut icon" type="image/png" href="/static/favicon.png">
 <link rel="stylesheet" href="../CSS/styles.pure.css" />
-<html>
+<link rel="stylesheet" href="../CSS/navbar.css">
+</head>
+<body>
 
-  <!-- NAVBAR STARTS -->
-
-  <div class="nav-wrapper">
-    <div>
-        <div class="nav">
-          <form action="/" class="search_form" spellcheck="false" method="get"> 
-            <button type="submit">
-                <img src="../engine.jpg" ></img>
-              </button> 
-            </form>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="https://weaviate.io/" target=”_blank”>Weaviate Website</a></li>
-                <li><a href="https://github.com/semi-technologies/weaviate" target=”_blank”>Github</a></li>
-                <li><a href="https://weaviate.slack.com/ssb/redirect" target=”_blank”>Slack</a></li>
-            </ul>
-        </div>
-    </div>
+<div class="nav-wrapper">
+  <img src="/static/holoskull.gif" style="width:70px; position:absolute; top:10px; left:10px;">
+  <div class="nav">
+    <ul class="nav-menu" id="nav-menu">
+      <li style="text-align: center;">Inspired by <a href="https://twitter.com/karpathy/status/1647372603907280896" target=”_blank” >@karpathy</a></li>
+      <li style="text-align: center;">Powered by <a href="https://github.com/weaviate" >
+        <img src="/static/weaviate-icon.png" alt="Weaviate" style="height: 30px;width: 30px; vertical-align:middle;"></a></li>
+      <li style="text-align: center;"><a href="https://github.com/weaviate-tutorials/awesome-moviate" >
+          <img src="/static/github-icon.png" alt="Github" style="height: 30px;width: 30px; vertical-align:middle;"></a></li>
+    </ul>
+  </div>
+  <img src="/static/holoskull.gif" style="width:70px; position:absolute; top:10px; right:10px;">
 </div>
-
-<!-- NAVBAR ENDS -->
 
 <!-- Search Space Starts -->
 
 <center>
-<div class="logo">
-  <img alt="Weaviate"  class="search" src="../img.jpeg">
-</div>
-<form action="/search/" id="filter_search_form" class="search_form" spellcheck="false" method="get"> 
+  <div class="logo">
+    <img src="/static/flame.gif">
+    <h1>!!! awesome-<img src="/static/moviate-logo.png" alt="Weaviate" style="height: 40px; vertical-align:center;"></a>
+      !!!</h1>
+    <img src="/static/flame.gif">
+  </div>
+  
+  <form action="/search/" id="filter_search_form" class="search_form" spellcheck="false" method="get">
 
-<div class="bar">
-  <input class="searchbar" type="text" name="searched_data" title="Search" autocomplete="off">
-</div>
-<div class="buttons" style="display: flex;">
-  <button class="button btn2" name="filter_search">Filter Search</button>
-  <button class="button btn2" name="semantic_search">Semantic Search</button>
-</form>
+    <div class="bar">
+      <input class="searchbar" type="text" name="searched_data" title="Search" autocomplete="off">
+    </div>
+    <div class="buttons" style="display: flex;justify-content: center;">
+      <button class="button btn2" name="filter_search">Keyword-Based Search</button>
+      <button class="button btn2" name="semantic_search">Semantic Search</button>
+  </form>
 
- 
+
 </center>
 
 <!-- Search Space Starts -->
 
-
-<% if(movie_info.length!=null){%>
-<div class="section-header">
+<% if(movie_info!=null){%>
+  <div class="section-header">
     Top Results For Your Search
-</div>
-
-<div class="dropdown">
-  <button class="dropbtn">Sort By&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></button>
-  <div class="dropdown-content">
-    
-    <form action="/sort" id="form-id1" spellcheck="false" method="get"> 
-      <a  onclick="document.getElementById('form-id1').submit();">
-      <li><input type="hidden"  value="rating_value asc" name="sorting_basis">By Rating (Asc)</li>
-    </a>
-    </form>
-    <form action="/sort" id="form-id2" spellcheck="false" method="get"> 
-      <a  onclick="document.getElementById('form-id2').submit();">
-      <li><input type="hidden"  value="rating_value desc" name="sorting_basis2">By Rating (Desc)</li>
-    </a>
-  </form>
-      <form action="/sort" id="form-id3" spellcheck="false" method="get"> 
-        <a onclick="document.getElementById('form-id3').submit();">
-      <li><input type="hidden"  value="title asc" name="sorting_basis3">By Name (Asc)</li>
-    </a>
-  </form>
-      <form action="/sort" id="form-id4" spellcheck="false" method="get"> 
-        <a onclick="document.getElementById('form-id4').submit();">
-      <li><input type="hidden"  value="title desc" name="sorting_basis4">By Name (Desc)</li>
-    </a>
-  </form>
-      <form action="/sort" id="form-id5" spellcheck="false" method="get"> 
-        <a onclick="document.getElementById('form-id5').submit();">
-      <li><input type="hidden"  value="date_published asc" name="sorting_basis5">By Release Date (Asc)</li>
-    </a>
-  </form>
-      <form action="/sort" id="form-id6" spellcheck="false" method="get"> 
-        <a onclick="document.getElementById('form-id6').submit();">
-      <li><input type="hidden"  value="date_published desc" name="sorting_basis6">By Release Date (Desc)</li>
-    </a>
-  </form>
   </div>
-</div>
-<%}%>
-  <section class="popular-tours">
+
+<section class="popular-tours">
     <div class="cards-wrapper">
-        <!-- MOVIE ITEM -->
-        <% for (let i = 0;i<movie_info.length; i++) { %> 
+      <!-- MOVIE ITEM -->
+      <% for (let i=0;i<movie_info.length; i++) { %>
         <div class="card">
-            <div class="movie-item">
-                <form
-                action=<%="/movie/"+movie_info[i].movie_id %>
-                method="get"
+          <div class="movie-item">
+            <form 
+            action=<%="/movie/"+movie_info[i].movie_id %>
+              method="get"
               >
               <button type="submit">
                 <img src="<%=movie_info[i].poster_link%>" alt="">
-            </button>
-                <div class="movie-item-content">
-                    <div class="movie-item-title" style = "text-transform:capitalize;">
-                        <%=movie_info[i].title  %>
-                    </div>
-                    <div class="movie-infos">
-                        <div class="movie-info">
-                            <i class="bx bxs-star"></i>
-                            <span><%=movie_info[i].rating_value%></span>
-                        </div>
-                        <div class="movie-info">
-                            <i class="bx bxs-time"></i>
-                            <span><%=movie_info[i].duration%></span>
-                        </div>
-                        <div class="movie-info">
-                            <span style = "text-transform:capitalize;"><%=movie_info[i].director%></span>
-                        </div>
-                    </div>
+              </button>
+              <div class="movie-item-content">
+                <div class="movie-item-title" style="text-transform:capitalize;">
+                  <%=movie_info[i].title %>
                 </div>
-                </form>
-            </div>
+                <div class="movie-infos">
+                  <div class="movie-info">
+                    <span>
+                      <%=movie_info[i].year%>
+                    </span>
+                  </div>
+                  <div class="movie-info">
+                    <span >
+                      <%=movie_info[i].genres%>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <% } %> 
-</div>
-</section>
-<script src="../js/jquery-3.4.1.min.js"></script>
-    </body>
-</html>
+        <% } %>
+    </div>
+    <% } else{ %>
+      <div class="section-header">
+        No matches found!
+      </div>
 
+      <% } %>
+</section>
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  </body>
+
+</html>

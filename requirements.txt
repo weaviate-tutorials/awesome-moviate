@@ -1,2 +1,4 @@
-pandas==1.4.2
-weaviate_client==3.5.1
+pandas>=2.0.2
+weaviate_client>=3.23.1
+tqdm
+urllib3==1.26.6

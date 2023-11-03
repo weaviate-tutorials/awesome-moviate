@@ -1,9 +1,46 @@
-#importing required libraries
 import weaviate
 import pandas as pd
-import math
-#setting up client
-client = weaviate.Client("http://localhost:8080")
+import os
+from tqdm import tqdm
+
+openai_key = os.environ.get("OPENAI_API_KEY", "")
+weaviate_url = os.environ.get("WEAVIATE_URL", "")
+weaviate_key = os.environ.get("WEAVIATE_API_KEY", "")
+
+auth_config = weaviate.AuthApiKey(api_key=weaviate_key)
+
+# Setting up client
+client = weaviate.Client(
+    url = weaviate_url,
+    auth_client_secret=auth_config,
+    additional_headers={
+         "X-OpenAI-Api-Key": openai_key, # Replace with your OpenAI key
+    }
+    )
+
+# Load and prepare dataset
+df=pd.read_csv("./data/movie_data.csv", 
+               usecols = ['id', 'Name', 'PosterLink', 'Genres', 'Actors', 
+                          'Director','Description', 'DatePublished', 'Keywords'], 
+               parse_dates = ["DatePublished"])
+df["year"] = df["DatePublished"].dt.year.fillna(0).astype(int)
+df.drop(["DatePublished"], axis=1, inplace=True)
+df = df[df.year > 1970]
+
+# Plot dataset
+plots = pd.read_csv('./data/wiki_movie_plots_deduped.csv')
+plots = plots[plots['Release Year'] > 1970]
+plots = plots[plots.duplicated(subset=['Title', 'Release Year', 'Plot']) == False]
+plots = plots[plots.duplicated(subset=['Title', 'Release Year']) == False]
+plots = plots[['Title', 'Plot', 'Release Year']]
+
+plots.columns = ['Name', 'Plot', 'year']
+
+# Merge
+df = df.merge(plots, on=['Name', 'year'], how='left').fillna('')
+df.reset_index(drop=True, inplace=True)
+
+
 
 #Checking if Movies schema already exists, then delete it
 current_schemas = client.schema.get()['classes']
@@ -14,138 +51,140 @@ for schema in current_schemas:
 #creating the schema
 movie_class_schema = {
     "class": "Movies",
-    "description": "A collection of movies with title, description, director, actors, rating, etc.",
-    "properties": [
+    "description": "A collection of movies since 1970.",
+    "vectorizer": "text2vec-openai",
+    "vectorIndexConfig" : {
+        "distance" : "cosine",
+    },
+    "moduleConfig": {
+        "text2vec-openai": {
+            "vectorizeClassName": False,
+            "model": "ada",
+            "modelVersion": "002",
+            "type": "text"
+        },
+    },
+}
+
+movie_class_schema["properties"] = [
         {
             "name": "movie_id",
             "dataType": ["number"],
             "description": "The id of the movie", 
-        },
-        {
-            "name": "best_rating",
-            "dataType": ["number"],
-            "description": "best rating of the movie", 
-        },        
-        {
-            "name": "worst_rating",
-            "dataType": ["number"],
-            "description": "worst rating of the movie", 
-        },
-        {
-            "name": "url",
-            "dataType": ["string"],
-            "description": "The IMBD url of the movie", 
+            "moduleConfig": {
+                "text2vec-openai": {  
+                    "skip" : True,
+                    "vectorizePropertyName" : False
+                }
+            }        
         },
         {
             "name": "title",
-            "dataType": ["string"],
+            "dataType": ["text"],
             "description": "The name of the movie", 
+            "moduleConfig": {
+                "text2vec-openai": {  
+                    "skip" : True,
+                    "vectorizePropertyName" : False
+                }
+            }   
+        },
+        {
+            "name": "year",
+            "dataType": ["number"],
+            "description": "The year in which movie was published", 
+            "moduleConfig": {
+                "text2vec-openai": {  
+                    "skip" : True,
+                    "vectorizePropertyName" : False
+                }
+            }   
         },
         {
             "name": "poster_link",
-            "dataType": ["string"],
+            "dataType": ["text"],
             "description": "The poster link of the movie", 
+            "moduleConfig": {
+                "text2vec-openai": {  
+                    "skip" : True,
+                    "vectorizePropertyName" : False
+                }
+            }   
         },
         {
             "name": "genres",
-            "dataType": ["string"],
-            "description": "The genres of the movie", 
+            "dataType": ["text"],
+            "description": "The genres of the movie",
+            "moduleConfig": {
+                "text2vec-openai": {  
+                    "skip" : True,
+                    "vectorizePropertyName" : False
+                }
+            }
         },
         {
             "name": "actors",
-            "dataType": ["string"],
+            "dataType": ["text"],
             "description": "The actors of the movie", 
+            "moduleConfig": {
+                "text2vec-openai": {  
+                    "skip" : True,
+                    "vectorizePropertyName" : False
+                }
+            }   
         },
         {
             "name": "director",
-            "dataType": ["string"],
-            "description": "Director of the movie", 
+            "dataType": ["text"],
+            "description": "Director of the movie",
+            "moduleConfig": {
+                "text2vec-openai": {  
+                    "skip" : True,
+                    "vectorizePropertyName" : False
+                }
+            }
         },
         {
             "name": "description",
-            "dataType": ["string"],
+            "dataType": ["text"],
             "description": "overview of the movie", 
         },
         {
-            "name": "date_published",
-            "dataType": ["string"],
-            "description": "The date on which movie was published", 
+            "name": "Plot",
+            "dataType": ["text"],
+            "description": "Plot of the movie from Wikipedia", 
         },
         {
             "name": "keywords",
-            "dataType": ["string"],
+            "dataType": ["text"],
             "description": "main keywords of the movie", 
         },
-        {
-            "name": "rating_count",
-            "dataType": ["number"],
-            "description": "rating count of the movie", 
-        }, 
-        {
-            "name": "rating_value",
-            "dataType": ["number"],
-            "description": "rating value of the movie", 
-        },
-        {
-            "name": "review_aurthor",
-            "dataType": ["string"],
-            "description": "aurthor of the review", 
-        },
-        {
-            "name": "review_date",
-            "dataType": ["string"],
-            "description": "date of review", 
-        },
-        {
-            "name": "review_body",
-            "dataType": ["string"],
-            "description": "body of the review", 
-        },
-        {
-            "name": "duration",
-            "dataType": ["string"],
-            "description": "the duration of the review", 
-        }
     ]
-}
 client.schema.create_class(movie_class_schema)
 
-#Configure batch process - for faster imports 
-#see: https://weaviate.io/developers/weaviate/current/restful-api-references/batch.html
+# Configure batch process - for faster imports 
 client.batch.configure(
   batch_size=10, 
-  # dynamically update the `batch_size` based on import speed
-  dynamic=True,
+  dynamic=True,   # dynamically update the `batch_size` based on import speed
   timeout_retries=3,
 )
 
-#Change the path to the place where data csv file is present
-data=pd.read_csv("final_data.csv")
 
-#Adding the data
-#You can decrease number of objects to be inserted to decrease the amount of time required
-for i in range (0,len(data)):
-    item = data.iloc[i]
+# Importing the data
+for i in tqdm(range(len(df))):
+    item = df.iloc[i]
 
     movie_object = {
         'movie_id':float(item['id']),
-        'url':str(item['url']),
         'title': str(item['Name']).lower(),
+        'year': int(item['year']),
         'poster_link': str(item['PosterLink']),
         'genres':str(item['Genres']),
         'actors': str(item['Actors']).lower(),
         'director': str(item['Director']).lower(),
         'description':str(item['Description']),
-        'date_published': str(item['DatePublished']),
+        'plot': str(item['Plot']),
         'keywords': str(item['Keywords']),
-        'worst_rating': float(item['WorstRating']),
-        'best_rating': float(item['BestRating']),
-        'rating_count': float(item['RatingCount']),
-        'rating_value':float(item['RatingValue']),
-        'review_aurthor': str(item['ReviewAurthor']),
-        'review_body': str(item['ReviewBody']),
-        'review_date': str(item['ReviewDate']),
-        'duration': str(item['duration'])
     }
 
     try:
@@ -156,6 +195,5 @@ for i in range (0,len(data)):
         # Stop the import on error
         break
 
-    print("Status: ", str(i)+"/"+str(len(data)))
-
+print(client.query.aggregate("Movies").with_meta_count().do())
 client.batch.flush()

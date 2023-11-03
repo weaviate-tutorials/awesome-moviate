@@ -5,38 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-
     <title><%=movie_info[0].title%></title>
-    <link rel="stylesheet" href="../CSS/style.css" />
-    <link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+    <link rel="shortcut icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="../CSS/styles.pure.css" />
     <link rel="stylesheet" href="../CSS/movie_info.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../CSS/slick.css" />
     <link rel="stylesheet" href="../CSS/navbar.css">
-    
 </head>
 <body>
 
-  <!-- NAVBAR STARTS -->
-
   <div class="nav-wrapper">
-    <div>
-        <div class="nav">
-          <form action="/" class="search_form" spellcheck="false" method="get"> 
-            <button type="submit">
-                <img src="../engine.jpg" ></img>
-              </button> 
-            </form>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="https://weaviate.io/" target=”_blank”>Weaviate Website</a></li>
-                <li><a href="https://github.com/semi-technologies/weaviate" target=”_blank”>Github</a></li>
-                <li><a href="https://weaviate.slack.com/ssb/redirect" target=”_blank”>Slack</a></li>
-            </ul>
-        </div>
+    <img src="/static/holoskull.gif" style="position:absolute; top:0; left:0;">
+    <div class="nav">
+      <ul class="nav-menu" id="nav-menu">
+        <li>Inspired by <a href="https://twitter.com/karpathy" target=”_blank”>@karpathy</a></li>
+        <li>Powered by <a href="https://github.com/weaviate">
+          <img src="/static/weaviate-icon.png" alt="Weaviate" style="height: 30px;width: 30px; position: relative;"></a></li>
+        <li><a href="https://github.com/weaviate">
+            <img src="/static/github-icon.png" alt="Github" style="height: 30px;width: 30px; position: relative;"></a></li>
+      </ul>
     </div>
-</div>
-
-<!-- NAVBAR ENDS -->
+    <img src="/static/holoskull.gif" style="position:absolute; top:0; right:0;">
+  </div>
 
 
 <!-- Movie Description Starts -->
@@ -46,15 +36,14 @@
             <div class="container-fluid position-relative h-100">
               <div class="slider-inner h-100">
                 <div class="row align-items-center h--100">
-                  <div class="col-xl-6 col-lg-12 col-md-12">
-                    <a href="javascript:void(0)">
-                      <div class="channel-logo" data-animation-in="fadeInLeft" data-delay-in="0.5">
-                        <h2>WEAVIATE</h2>
-                      </div>
-                    </a>
-                    <h1 class="slider-text big-title title text-uppercase">
-                      <%=movie_info[0].title%>
-                    </h1>
+                  <div class="d-flex align-items-center r-mb-23 mt-4" data-animation-in="fadeInUp" data-delay-in="1.2">
+                    <a href="/"  class="btn btn-hover iq-button">Go back</a>
+                    </div>               
+                    <div class="logo">
+                      <img src="/static/flame.gif">
+                      <h1><%=movie_info[0].title%></h1>
+                      <img src="/static/flame.gif">
+                    </div>
                     <div class="d-flex flex-wrap align-items-center fadeInLeft animated" data-animation-in="fadeInLeft"
                       style="opacity: 1">
                       <div class="slider-ratting d-flex align-items-center mr-4 mt-2 mt-md-3">
@@ -86,7 +75,6 @@
                     </div>
                     <div class="d-flex align-items-center r-mb-23 mt-4" data-animation-in="fadeInUp" data-delay-in="1.2">
                       <a href="<%= movie_info[0].url %>" target=”_blank” class="btn btn-hover iq-button"><i class="fa fa-play mr-3"></i>View on IMBD</a>
-                      <a href="/more_details"class="btn btn-link">More Details</a>
                     </div>
                   </div>
                 </div>
@@ -101,52 +89,44 @@
 <!-- Movie Description Ends -->
 
 <!-- Recommended Movie Section Start -->
+  <div class="section-header">
+    Similar movies
+  </div>
 
-      <div class="main-content">
-        <section id="iq-favorites">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-12 overflow-hidden">
-                <div class="iq-main-header d-flex align-items-center justify-content-between">
-                  <h4 class="main-title">Recommended movies for this pick </h4>
+  <section class="popular-tours">
+    <div class="cards-wrapper">
+      <!-- MOVIE ITEM -->
+      <% for (let i=1;i<related_movies.length; i++) { %>
+        <div class="card">
+          <div class="movie-item">
+            <form action=<%="/movie/"+related_movies[i].movie_id %>
+              method="get"
+              >
+              <button type="submit">
+                <img src="<%=related_movies[i].poster_link%>" alt="">
+              </button>
+              <div class="movie-item-content">
+                <div class="movie-item-title" style="text-transform:capitalize;">
+                  <%=related_movies[i].title %>
                 </div>
-                <div class="favorite-contens">
-                  <ul class="favorites-slider list-inline row p-0 mb-0">
-                    <!-- slide item 1 -->
-                    <% for (let i = 1;i<related_movies.length; i++) { %> 
-                    <li class="slide-item">
-                      <div class="block-images position-relative">
-                        <div class="img-box">
-                          <img src="<%=related_movies[i].poster_link%>" class="img-fluid" alt="" />
-                        </div>
-                        <div class="block-description">
-                          <h6 class="iq-title">
-                            <a href="<%="/movie/"+related_movies[i].movie_id %>"> <%=related_movies[i].title%> </a>
-                          </h6>
-                          <div class="movie-time d-flex align-items-center my-2">
-                            <div class="badge badge-secondary p-1 mr-2"> <%=related_movies[i].rating_value%></div>
-                            <span class="text-white"> <%=related_movies[i].duration%></span>
-                          </div>
-                          
-                          <div class="hover-buttons">
-                            <span class="btn btn-hover iq-button">
-                              <i class="fa fa-play mr-1"></i>
-                              <a href="<%="/movie/"+related_movies[i].movie_id %>">
-                              Know More
-                              </a>  
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <%}%>
-                  </ul>
+                <div class="movie-infos">
+                  <div class="movie-info">
+                                        <span>
+                      <%=related_movies[i].year%>
+                    </span>
+                  </div>
+                  <div class="movie-info">
+                    <span >
+                      <%=related_movies[i].genres%>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
-        </section>
-      </div>    
+        </div>
+        <% } %>
+    </div>
 <!-- Recommended Movie Section End -->
 
 </body>
