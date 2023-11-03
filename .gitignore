@@ -1,3 +1,5 @@
 node_modules
 package-lock.json
 final_data.csv
+.DS_Store
+.venv

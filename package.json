@@ -5,21 +5,26 @@
   "main": "add_data.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "node --inspect index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "debug": "^4.3.4",
     "ejs": "^3.1.7",
     "express": "^4.17.3",
+    "node-fetch": "^2.6.7",
     "nodemon": "^2.0.18",
+    "server": "^1.0.38",
     "weaviate-client": "^2.10.1",
-    "node-fetch": "^2.6.7"
+    "weaviate-ts-client": "^1.6.0",
+    "webpack": "^5.89.0"
   },
   "overrides": {
     "isomorphic-fetch": {
       "node-fetch": "^2.6.7"
-    }    
-  } 
+    }
+  }
 }

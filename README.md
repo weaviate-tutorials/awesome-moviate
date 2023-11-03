@@ -1,10 +1,10 @@
 # Movie Search Engine
- 
-The Dataset used for this example can be found here: https://www.kaggle.com/datasets/yashgupta24/48000-movies-dataset \
-It is data of over 48,000+ movies scraped from IMBD website.
 
-This is a demo example to show how to make a search engine for movies using weaviate. \
-The functionalities of weaviate that it covers are:-
+This is a demo example to show how to make a search engine for movies using Weaviate. This project is inspired by [Andrej Karpathy's weekend hack](https://twitter.com/karpathy/status/1647372603907280896). 
+
+[movie_search_engine.webm](https://user-images.githubusercontent.com/75658681/178302422-247971ad-4c9f-4b8b-8c1c-1f7db267a2a0.webm)
+
+The functionalities of weaviate that it covers are:
 1. How to add schema and load data into weaviate
 2. How to perform semantic search using weaviate. We can search for a sentence and then we can fetch movies having similar plots. more details can be found [here](https://weaviate.io/developers/weaviate/current/tutorials/how-to-perform-a-semantic-search.html#explore-graphql-function)
 3. How to filter search using weaviate. We can search for movie by specifying which text should be in movies title,description,actors etc. more details can be found [here](https://weaviate.io/developers/weaviate/current/graphql-references/filters.html)
@@ -13,11 +13,24 @@ The functionalities of weaviate that it covers are:-
 
 This example uses HTML,CSS,Js for frontend and NodeJs for the backend. 
 
+The code is based on an [old Weaviate demo](https://github.com/weaviate/weaviate-examples/tree/main/movies-search-engine). 
+
+## Prerequisites
+* Docker
+* Python
+
+## Setup instructions
+
 Follow the following steps to reproduce the example 
-1. Download the dataset from https://www.kaggle.com/datasets/yashgupta24/48000-movies-dataset and paste it in the directory where add_data.py file exists 
+1. Virtual environment
+```bash
+python -m venv .venv             
+source .venv/bin/activate
+``` 
+
 2. Run the following command to run the weaviate docker file 
 ```bash
-sudo docker-compose up -d
+docker compose up -d
 ``` 
 
 3. Run the following command in directory to install all required dependencies 
@@ -36,13 +49,9 @@ npm install
 ```bash
 npm run start
 ``` 
-A short demo usage:-
 
+## Usage instructions
 
-
-[movie_search_engine.webm](https://user-images.githubusercontent.com/75658681/178302422-247971ad-4c9f-4b8b-8c1c-1f7db267a2a0.webm)
-
-Some description about queries:- \
 All the used queries can be found in queries.js file. There are mainly 5 queries being used:
 1. Query to fetch filtered search results:- This query uses the where filter provided in weaviate which takes various operators like 'And', 'Or', 'Not', 'Like' etc. More information about the Where filter can be found [here](https://weaviate.io/developers/weaviate/current/graphql-references/filters.html#where-filter). For this example we used the Like operator  of the Where filter which allows us to do string searches based on the partial match. More information on the Like operator can be found [here](https://weaviate.io/developers/weaviate/current/graphql-references/filters.html#like-operator).
 ```js
@@ -168,3 +177,7 @@ client.graphql
             console.error(err)
         });
 ```      
+
+## Dataset
+The dataset used for this example can be found here: https://www.kaggle.com/datasets/yashgupta24/48000-movies-dataset \
+It is data of over 48,000+ movies scraped from IMBD website.
