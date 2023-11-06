@@ -36,15 +36,16 @@
     <img src="/static/flame.gif">
   </div>
   
-  <form action="/search/" id="filter_search_form" class="search_form" spellcheck="false" method="get">
+  <form action="/search/" id="search_form" class="search_form" spellcheck="false" method="get">
 
     <div class="bar">
       <input class="searchbar" type="text" name="searched_data" title="Search" autocomplete="off">
     </div>
     <div class="buttons" style="display: flex;justify-content: center;">
-      <button class="button btn2" name="filter_search">Keyword-Based Search</button>
+      <button class="button btn2" name="keyword_search">Keyword Search</button>
       <button class="button btn2" name="semantic_search">Semantic Search</button>
-  </form>
+      <button class="button btn2" name="hybrid_search">Hybrid Search</button>
+    </form>
 
 
 </center>
