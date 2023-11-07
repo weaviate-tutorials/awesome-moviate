@@ -5,8 +5,12 @@ This is a demo of a movie search engine. This project is inspired by [Andrej Kar
 [![Weaviate](https://img.shields.io/static/v1?label=powered%20by&message=Weaviate%20%E2%9D%A4&color=green&style=flat-square)](https://weaviate.io/) 
  [![Docker support](https://img.shields.io/badge/Docker_support-%E2%9C%93-4c1?style=flat-square&logo=docker&logoColor=white)](https://docs.docker.com/get-started/) [![Demo](https://img.shields.io/badge/Check%20out%20the%20demo!-yellow?&style=flat-square&logo=react&logoColor=white)](https://awesome-moviate.weaviate.io/)
 
+![Demo of Awesome Moviate](https://github.com/weaviate-tutorials/awesome-moviate/demo.mp4)
+
 
 This project allows three types of searches over movies: keyword-based (BM25), semantic, and hybrid searches. Additionally, it retrieves similar movies to a selected one.
+
+Read more on the related [blog](https://towardsdatascience.com/recreating-andrej-karpathys-weekend-project-a-movie-search-engine-9b270d7a92e4).
 
 ## Prerequisites
 * Docker
