@@ -9,6 +9,16 @@
     <link rel="shortcut icon" type="image/png" href="/static/favicon.png">
 <link rel="stylesheet" href="../CSS/styles.pure.css" />
 <link rel="stylesheet" href="../CSS/navbar.css">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="+ process.env.GOOGLE_TAG_ID></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', process.env.GOOGLE_TAG_ID);
+</script>
+
 </head>
 <body>
 
