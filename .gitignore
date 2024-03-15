@@ -3,3 +3,4 @@ package-lock.json
 final_data.csv
 .DS_Store
 .venv
+.env

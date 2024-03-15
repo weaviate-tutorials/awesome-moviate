@@ -15,13 +15,13 @@
   <link rel="stylesheet" href="../CSS/slick.css" />
   <link rel="stylesheet" href="../CSS/navbar.css">
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id="+ process.env.GOOGLE_TAG_ID></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= googleTagId %>"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
-    gtag('config', process.env.GOOGLE_TAG_ID);
+    gtag('config', '<%= googleTagId %>');
   </script>
 </head>
 
@@ -47,12 +47,12 @@
 
   <center>
     <div class="logo">
-        <img src="/static/flame.gif">
-        <h1>
-          <%=movie_info[0].title%>
-        </h1>
-        <img src="/static/flame.gif">
-      </div>
+      <img src="/static/flame.gif">
+      <h1>
+        <%=movie_info[0].title%>
+      </h1>
+      <img src="/static/flame.gif">
+    </div>
     </div>
   </center>
 
@@ -75,36 +75,36 @@
 
 
               <div class="movie-info-row">
-              <div class="movie-info-col-image image-container">
-                <img src="<%=movie_info[0].poster_link%>" style="height:200px; margin-left:-15px;" />
-              </div>
-            
-              <div class="movie-info-col-text">
-                <div class="trending-list" data-animation-in="fadeInUp" data-delay-in="1.2">
-                  <div class="text-primary title starring">
-                    Director:
-                    <span class="text-body" style="text-transform:capitalize;">
-                      <%=movie_info[0].director%>
-                    </span>
-                  </div>
-                  <div class="text-primary title starring">
-                    Starring:
-                    <span class="text-body" style="text-transform:capitalize;">
-                      <%=movie_info[0].actors%>
-                    </span>
-                  </div>
-                  <div class="text-primary title genres">
-                    Genres: <span class="text-body" style="text-transform:capitalize;">
-                      <%=movie_info[0].genres%>
-                    </span>
-                  </div>
-                  <div class="text-primary title genres">
-                    Keywords: <span class="text-body" style="text-transform:capitalize;">
-                      <%=movie_info[0].keywords%>
-                    </span>
+                <div class="movie-info-col-image image-container">
+                  <img src="<%=movie_info[0].poster_link%>" style="height:200px; margin-left:-15px;" />
+                </div>
+
+                <div class="movie-info-col-text">
+                  <div class="trending-list" data-animation-in="fadeInUp" data-delay-in="1.2">
+                    <div class="text-primary title starring">
+                      Director:
+                      <span class="text-body" style="text-transform:capitalize;">
+                        <%=movie_info[0].director%>
+                      </span>
+                    </div>
+                    <div class="text-primary title starring">
+                      Starring:
+                      <span class="text-body" style="text-transform:capitalize;">
+                        <%=movie_info[0].actors%>
+                      </span>
+                    </div>
+                    <div class="text-primary title genres">
+                      Genres: <span class="text-body" style="text-transform:capitalize;">
+                        <%=movie_info[0].genres%>
+                      </span>
+                    </div>
+                    <div class="text-primary title genres">
+                      Keywords: <span class="text-body" style="text-transform:capitalize;">
+                        <%=movie_info[0].keywords%>
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
               </div>
             </div>
           </div>

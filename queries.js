@@ -13,12 +13,19 @@ let num_movies = 20;
 
 //Query to fetch keyword results
 async function get_keyword_results(text) {
+
+    let _text = text
+    if (!text) {
+        _text = "Movie"
+    }
+
     let data = await client.graphql
         .get()
         .withClassName('Movies')
-        .withBm25({query: text,
+        .withBm25({
+            query: _text,
             properties: ['title^3', 'director', 'genres', 'actors', 'keywords', 'description', 'plot'],
-    })
+        })
         .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
         .withLimit(num_movies)
         .do()
@@ -35,32 +42,32 @@ async function get_keyword_results(text) {
 async function get_semantic_results(text) {
     if (text.length === 0) {
         let data = await client.graphql
-        .get()
-        .withClassName('Movies')
-        .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
-        .withLimit(num_movies)
-        .do()
-        .then(info => {
-            return info
-        })
-        .catch(err => {
-            console.error(err)
-        });
+            .get()
+            .withClassName('Movies')
+            .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
+            .withLimit(num_movies)
+            .do()
+            .then(info => {
+                return info
+            })
+            .catch(err => {
+                console.error(err)
+            });
         return data;
     } else {
-    let data = await client.graphql
-        .get()
-        .withClassName('Movies')
-        .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
-        .withNearText({concepts: [text]})
-        .withLimit(num_movies)
-        .do()
-        .then(info => {
-            return info
-        })
-        .catch(err => {
-            console.error(err)
-        });
+        let data = await client.graphql
+            .get()
+            .withClassName('Movies')
+            .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
+            .withNearText({ concepts: [text] })
+            .withLimit(num_movies)
+            .do()
+            .then(info => {
+                return info
+            })
+            .catch(err => {
+                console.error(err)
+            });
         return data;
     }
 
@@ -107,7 +114,7 @@ async function get_movie_details(id) {
     let data = await client.graphql
         .get()
         .withClassName('Movies')
-        .withFields(['title', 'poster_link', 'description', 'year', 'director', 'actors',  'genres', 'keywords', 'movie_id', '_additional { id certainty }'])
+        .withFields(['title', 'poster_link', 'description', 'year', 'director', 'actors', 'genres', 'keywords', 'movie_id', '_additional { id certainty }'])
         .withWhere({
             path: ["movie_id"],
             operator: "Equal",

@@ -1,116 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>awesome-moviate</title>
-    <link rel="shortcut icon" type="image/png" href="/static/favicon.png">
-<link rel="stylesheet" href="../CSS/styles.pure.css" />
-<link rel="stylesheet" href="../CSS/navbar.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script async src="https://www.googletagmanager.com/gtag/js?id="+ process.env.GOOGLE_TAG_ID></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <title>awesome-moviate</title>
+  <link rel="shortcut icon" type="image/png" href="/static/favicon.png">
+  <link rel="stylesheet" href="../CSS/styles.pure.css" />
+  <link rel="stylesheet" href="../CSS/navbar.css">
 
-  gtag('config', process.env.GOOGLE_TAG_ID);
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= googleTagId %>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', '<%= googleTagId %>');
+  </script>
 
 </head>
+
 <body>
 
-<div class="nav-wrapper">
-  <img src="/static/holoskull.gif" style="width:70px; position:absolute; top:10px; left:10px;">
-  <div class="nav">
-    <ul class="nav-menu" id="nav-menu">
-      <li style="text-align: center;">Inspired by <a href="https://twitter.com/karpathy/status/1647372603907280896" target=”_blank” >@karpathy</a></li>
-      <li style="text-align: center;">Powered by <a href="https://github.com/weaviate" >
-        <img src="/static/weaviate-icon.png" alt="Weaviate" style="height: 30px;width: 30px; vertical-align:middle;"></a></li>
-        <li style="text-align: center;">Built with &#128154; by <a href="https://www.linkedin.com/in/804250ab/" target=”_blank” >Leonie</a></li>
-        <li style="text-align: center;"><a href="https://github.com/weaviate-tutorials/awesome-moviate" >
-          <img src="/static/github-icon.png" alt="Github" style="height: 30px;width: 30px; vertical-align:middle;"></a></li>
-    </ul>
-  </div>
-  <img src="/static/holoskull.gif" style="width:70px; position:absolute; top:10px; right:10px;">
-</div>
-
-<!-- Search Space Starts -->
-
-<center>
-  <div class="logo">
-    <img src="/static/flame.gif">
-    <h1>!!! awesome-<img src="/static/moviate-logo.png" alt="Moviate" style="height: 25px; vertical-align:center;"></a>
-      !!!</h1>
-    <img src="/static/flame.gif">
-  </div>
-  
-  <form action="/search/" id="search_form" class="search_form" spellcheck="false" method="get">
-
-    <div class="bar">
-      <input class="searchbar" type="text" name="searched_data" title="Search" autocomplete="off">
+  <div class="nav-wrapper">
+    <img src="/static/holoskull.gif" style="width:70px; position:absolute; top:10px; left:10px;">
+    <div class="nav">
+      <ul class="nav-menu" id="nav-menu">
+        <li style="text-align: center;">Inspired by <a href="https://twitter.com/karpathy/status/1647372603907280896"
+            target=”_blank”>@karpathy</a></li>
+        <li style="text-align: center;">Powered by <a href="https://github.com/weaviate">
+            <img src="/static/weaviate-icon.png" alt="Weaviate"
+              style="height: 30px;width: 30px; vertical-align:middle;"></a></li>
+        <li style="text-align: center;">Built with &#128154; by <a href="https://www.linkedin.com/in/804250ab/"
+            target=”_blank”>Leonie</a></li>
+        <li style="text-align: center;"><a href="https://github.com/weaviate-tutorials/awesome-moviate">
+            <img src="/static/github-icon.png" alt="Github"
+              style="height: 30px;width: 30px; vertical-align:middle;"></a></li>
+      </ul>
     </div>
-    <div class="buttons" style="display: flex;justify-content: center;">
-      <button class="button btn2" name="keyword_search">Keyword Search</button>
-      <button class="button btn2" name="semantic_search">Semantic Search</button>
-      <button class="button btn2" name="hybrid_search">Hybrid Search</button>
+    <img src="/static/holoskull.gif" style="width:70px; position:absolute; top:10px; right:10px;">
+  </div>
+
+  <!-- Search Space Starts -->
+
+  <center>
+    <div class="logo">
+      <img src="/static/flame.gif">
+      <h1>!!! awesome-<img src="/static/moviate-logo.png" alt="Moviate"
+          style="height: 25px; vertical-align:center;"></a>
+        !!!</h1>
+      <img src="/static/flame.gif">
+    </div>
+
+    <form action="/search/" id="search_form" class="search_form" spellcheck="false" method="get">
+
+      <div class="bar">
+        <input class="searchbar" type="text" name="searched_data" title="Search" autocomplete="off">
+      </div>
+      <div class="buttons" style="display: flex;justify-content: center;">
+        <button class="button btn2" name="keyword_search">Keyword Search</button>
+        <button class="button btn2" name="semantic_search">Semantic Search</button>
+        <button class="button btn2" name="hybrid_search">Hybrid Search</button>
     </form>
 
 
-</center>
+  </center>
 
-<!-- Search Space Starts -->
+  <!-- Search Space Starts -->
 
-<% if(movie_info!=null){%>
-  <div class="section-header">
-    Top Results For Your Search
-  </div>
-
-<section class="popular-tours">
-    <div class="cards-wrapper">
-      <!-- MOVIE ITEM -->
-      <% for (let i=0;i<movie_info.length; i++) { %>
-        <div class="card">
-          <div class="movie-item">
-            <form 
-            action=<%="/movie/"+movie_info[i].movie_id %>
-              method="get"
-              >
-              <button type="submit">
-                <img src="<%=movie_info[i].poster_link%>" alt="">
-              <div class="movie-item-content">
-                <div class="movie-item-title" style="text-transform:capitalize;">
-                  <%=movie_info[i].title %>
-                </div>
-                <div class="movie-infos">
-                  <div class="movie-info">
-                    <span>
-                      <%=movie_info[i].year%>
-                    </span>
-                  </div>
-                  <div class="movie-info">
-                    <span >
-                      <%=movie_info[i].genres%>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </button>
-            </form>
-          </div>
-        </div>
-        <% } %>
+  <% if(movie_info!=null){%>
+    <div class="section-header">
+      Top Results For Your Search
     </div>
-    <% } else{ %>
-      <div class="section-header">
-        No matches found!
-      </div>
 
-      <% } %>
-</section>
-  <script src="../js/jquery-3.4.1.min.js"></script>
-  </body>
+    <section class="popular-tours">
+      <div class="cards-wrapper">
+        <!-- MOVIE ITEM -->
+        <% for (let i=0;i<movie_info.length; i++) { %>
+          <div class="card">
+            <div class="movie-item">
+              <form action=<%="/movie/" +movie_info[i].movie_id %>
+                method="get"
+                >
+                <button type="submit">
+                  <img src="<%=movie_info[i].poster_link%>" alt="">
+                  <div class="movie-item-content">
+                    <div class="movie-item-title" style="text-transform:capitalize;">
+                      <%=movie_info[i].title %>
+                    </div>
+                    <div class="movie-infos">
+                      <div class="movie-info">
+                        <span>
+                          <%=movie_info[i].year%>
+                        </span>
+                      </div>
+                      <div class="movie-info">
+                        <span>
+                          <%=movie_info[i].genres%>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </form>
+            </div>
+          </div>
+          <% } %>
+      </div>
+      <% } else{ %>
+        <div class="section-header">
+          No matches found!
+        </div>
+
+        <% } %>
+    </section>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+</body>
 
 </html>

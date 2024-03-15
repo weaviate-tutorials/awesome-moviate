@@ -27,7 +27,7 @@ let id = "";
 
 //rendering home page
 app.get('/', (req, res) => {
-  res.render(path.join(initial_path, "search.ejs"), { movie_info: {} });
+  res.render(path.join(initial_path, "search.ejs"), { movie_info: {}, googleTagId: process.env.GOOGLE_TAG_ID });
 })
 
 
@@ -35,17 +35,17 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
   // stores the searched text in variable "text"
   text = req.query['searched_data'].toLowerCase();
-if (req.query['semantic_search'] != undefined) {
+  if (req.query['semantic_search'] != undefined) {
     let get_results = get_semantic_results(text);
-    get_results.then(results => { res.render(path.join(initial_path, "search.ejs"), { movie_info: results.data.Get.Movies }) });
+    get_results.then(results => { res.render(path.join(initial_path, "search.ejs"), { movie_info: results.data.Get.Movies, googleTagId: process.env.GOOGLE_TAG_ID }) });
   }
   else if (req.query['hybrid_search'] != undefined) {
     let get_results = get_hybrid_results(text);
-    get_results.then(results => { res.render(path.join(initial_path, "search.ejs"), { movie_info: results.data.Get.Movies }) });
+    get_results.then(results => { res.render(path.join(initial_path, "search.ejs"), { movie_info: results.data.Get.Movies, googleTagId: process.env.GOOGLE_TAG_ID }) });
   }
   else {
     let get_results = get_keyword_results(text);
-    get_results.then(results => { res.render(path.join(initial_path, "search.ejs"), { movie_info: results.data.Get.Movies }) });
+    get_results.then(results => { res.render(path.join(initial_path, "search.ejs"), { movie_info: results.data.Get.Movies, googleTagId: process.env.GOOGLE_TAG_ID }) });
   }
 })
 
@@ -59,7 +59,7 @@ app.get('/movie/:id', (req, res) => {
   movie_info.then(info1 => {
     let recommended_movies = get_recommended_movies(info1.data.Get.Movies[0]._additional.id)
     recommended_movies.then(info2 => {
-      res.render(path.join(initial_path, "movie_info.ejs"), { movie_info: info1.data.Get.Movies, related_movies: info2.data.Get.Movies });
+      res.render(path.join(initial_path, "movie_info.ejs"), { movie_info: info1.data.Get.Movies, related_movies: info2.data.Get.Movies, googleTagId: process.env.GOOGLE_TAG_ID });
     })
   })
 })
