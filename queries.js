@@ -21,7 +21,7 @@ async function get_keyword_results(text) {
 
     let data = await client.graphql
         .get()
-        .withClassName('Movies')
+        .withClassName('Awesome_moviate_movies')
         .withBm25({
             query: _text,
             properties: ['title^3', 'director', 'genres', 'actors', 'keywords', 'description', 'plot'],
@@ -43,7 +43,7 @@ async function get_semantic_results(text) {
     if (text.length === 0) {
         let data = await client.graphql
             .get()
-            .withClassName('Movies')
+            .withClassName('Awesome_moviate_movies')
             .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
             .withLimit(num_movies)
             .do()
@@ -57,7 +57,7 @@ async function get_semantic_results(text) {
     } else {
         let data = await client.graphql
             .get()
-            .withClassName('Movies')
+            .withClassName('Awesome_moviate_movies')
             .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
             .withNearText({ concepts: [text] })
             .withLimit(num_movies)
@@ -78,7 +78,7 @@ async function get_hybrid_results(text) {
     if (text.length === 0) {
         let data = await client.graphql
             .get()
-            .withClassName('Movies')
+            .withClassName('Awesome_moviate_movies')
             .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
             .withLimit(num_movies)
             .do()
@@ -92,7 +92,7 @@ async function get_hybrid_results(text) {
     } else {
         let data = await client.graphql
             .get()
-            .withClassName('Movies')
+            .withClassName('Awesome_moviate_movies')
             .withFields(['title', 'poster_link', 'genres', 'year', 'director', 'movie_id'])
             .withHybrid({ query: text, alpha: 0.5 })
             .withLimit(num_movies)
@@ -113,7 +113,7 @@ async function get_hybrid_results(text) {
 async function get_movie_details(id) {
     let data = await client.graphql
         .get()
-        .withClassName('Movies')
+        .withClassName('Awesome_moviate_movies')
         .withFields(['title', 'poster_link', 'description', 'year', 'director', 'actors', 'genres', 'keywords', 'movie_id', '_additional { id certainty }'])
         .withWhere({
             path: ["movie_id"],
@@ -134,7 +134,7 @@ async function get_movie_details(id) {
 async function get_recommended_movies(mov_id) {
     let data = await client.graphql
         .get()
-        .withClassName('Movies')
+        .withClassName('Awesome_moviate_movies')
         .withFields(['title', 'genres', 'year', 'poster_link', 'movie_id'])
         .withNearObject({ id: mov_id })
         .withLimit(num_movies + 1)

@@ -40,17 +40,17 @@ plots.columns = ['Name', 'Plot', 'year']
 df = df.merge(plots, on=['Name', 'year'], how='left').fillna('')
 df.reset_index(drop=True, inplace=True)
 
-
+collection_name = 'Awesome_moviate_movies'
 
 #Checking if Movies schema already exists, then delete it
 current_schemas = client.schema.get()['classes']
 for schema in current_schemas:
-    if schema['class']=='Movies':
-        client.schema.delete_class('Movies')
+    if schema['class']==collection_name:
+        client.schema.delete_class(collection_name)
 
 #creating the schema
 movie_class_schema = {
-    "class": "Movies",
+    "class": collection_name,
     "description": "A collection of movies since 1970.",
     "vectorizer": "text2vec-openai",
     "vectorIndexConfig" : {
@@ -188,12 +188,12 @@ for i in tqdm(range(len(df))):
     }
 
     try:
-        client.batch.add_data_object(movie_object, "Movies")
+        client.batch.add_data_object(movie_object, collection_name)
     except BaseException as error:
         print("Import Failed at: ",i)
         print("An exception occurred: {}".format(error))
         # Stop the import on error
         break
 
-print(client.query.aggregate("Movies").with_meta_count().do())
+print(client.query.aggregate(collection_name).with_meta_count().do())
 client.batch.flush()
